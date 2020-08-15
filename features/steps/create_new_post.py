@@ -24,22 +24,22 @@ def step_impl(context):
     context.user_response['_meta']['code'] == 200
 
 
-@given('User provides a valid user id')
+@given('User has a valid user id')
 def step_impl(context):
     context.request_body = {"user_id": context.user_response['result']['id']}
 
 
-@step('User provides some title as "{title}"')
+@step('User has some title as "{title}"')
 def step_impl(context, title):
     context.request_body['title'] = title
 
 
-@step('User provides some body as "{body}"')
+@step('User has some body as "{body}"')
 def step_impl(context, body):
     context.request_body['body'] = body
 
 
-@when('User submits the request to create a new post')
+@when('I submit the request to create a new post')
 def step_impl(context):
     response = requests.post('https://gorest.co.in/public-api/posts', headers=context.header, json=context.request_body)
     context.response_body = response.json()
