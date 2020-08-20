@@ -5,7 +5,7 @@ import random
 
 @given('A valid access token')
 def step_impl(context):
-    context.header = {'Authorization': 'Bearer HGFZjxWRKiD3ecuLxSj2O2yO_X_0zin8y8fz'}
+    context.header = {'Authorization': 'Bearer 0e063d9dee1adca4508755a41d99c37451675953bc1b1e61a26ec7a16f66e228'}
 
 
 @step('User exists in a database')
@@ -21,7 +21,7 @@ def step_impl(context):
     }
     response = requests.post('https://gorest.co.in/public-api/users', headers=context.header, json=user_data)
     context.user_response = response.json()
-    context.user_response['_meta']['code'] == 200
+    assert context.user_response['_meta']['code'] == 200
 
 
 @given('User has a valid user id')

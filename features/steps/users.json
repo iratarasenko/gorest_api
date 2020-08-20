@@ -1,0 +1,14 @@
+[
+  {
+    "name": "Test1",
+    "gender": "Male",
+    "email": "test01@test.global",
+    "status": "Active"
+  },
+  {
+    "name": "Test2",
+    "gender": "Female",
+    "email": "test02@test.global",
+    "status": "Active"
+  }
+]

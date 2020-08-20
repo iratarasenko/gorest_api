@@ -1,6 +1,6 @@
 Feature: Create a post
 
-  Background: Set up a user is database
+  Background: Set up a user in database
     Given A valid access token
     And User exists in a database
 
