@@ -1,67 +1,29 @@
 from behave import *
 import requests
-import random
 
 
-@given('A valid access token')
+@given('I provide valid data to all required post fields')
 def step_impl(context):
-    context.header = {'Authorization': 'Bearer 0e063d9dee1adca4508755a41d99c37451675953bc1b1e61a26ec7a16f66e228'}
-
-
-@step('User exists in a database')
-def step_impl(context):
-    number = random.randint(1, 99999999)
-    email = f"test_gorest_api{number}@gmail.com"
-
-    user_data = {
-        "first_name": "Test",
-        "last_name": "Test",
-        "gender": "male",
-        "email": email,
+    post = {
+        "user_id": context.users[0]['id'],
+        "title": "Test title",
+        "body": "Test body"
     }
-    response = requests.post('https://gorest.co.in/public-api/users', headers=context.header, json=user_data)
-    context.user_response = response.json()
-    assert context.user_response['_meta']['code'] == 200
-
-
-@given('User has a valid user id')
-def step_impl(context):
-    context.request_body = {"user_id": context.user_response['result']['id']}
-
-
-@step('User has some title as "{title}"')
-def step_impl(context, title):
-    context.request_body['title'] = title
-
-
-@step('User has some body as "{body}"')
-def step_impl(context, body):
-    context.request_body['body'] = body
+    context.new_post = post
 
 
 @when('I submit the request to create a new post')
 def step_impl(context):
-    response = requests.post('https://gorest.co.in/public-api/posts', headers=context.header, json=context.request_body)
+    response = requests.post(
+        'https://gorest.co.in/public-api/posts',
+        headers=context.header,
+        json=context.new_post,
+    )
     context.response_body = response.json()
     context.status_code = response.status_code
 
 
-@then('"200" status code is returned')
+@then('A new post is successfully created')
 def step_impl(context):
     assert context.status_code == 200
-
-
-@step('Post id is in the response body')
-def step_impl(context):
-    print(context.response_body)
-    assert 'id' in context.response_body['result']
-
-
-@step('Title "{title}" is in the response body')
-def step_impl(context, title):
-    assert context.response_body['result']['title'] == title
-
-
-@step('Body "{body}" is in the response body')
-def step_impl(context, body):
-    assert context.response_body['result']['body'] == body
+    assert context.response_body['code'] == 201
