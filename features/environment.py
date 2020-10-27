@@ -3,7 +3,7 @@ import json
 
 
 def before_all(context):
-    context.header = {'Authorization': 'Bearer 0e063d9dee1adca4508755a41d99c37451675953bc1b1e61a26ec7a16f66e228'}
+    context.header = {'Authorization': 'Bearer {'token received after authorization on https://gorest.co.in/'}
     context.users = []
 
     f = open('features/steps/users.json')
