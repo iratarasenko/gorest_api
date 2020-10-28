@@ -21,10 +21,5 @@ def step_impl(context):
     emails_from_response = []
     user_emails = [user['email'] for user in context.response_body['data'] if user['email'].endswith('@test.global')]
     emails_from_response.append(user_emails)
-
-    print(context.response_body)
-    print(emails_from_response)
-    print(context.users)
-
     assert emails_from_response == context.users
 
